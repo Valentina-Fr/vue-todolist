@@ -5,10 +5,16 @@ const app = new Vue ({
     el: "#app",
     data: {
         toDoList: ["Fare la spesa", "Fare il bucato", "Pagare bollette", "Pulire casa"],
+        newTask: "",
     }, 
     methods: {
         removeItem(index) {
             this.toDoList.splice(index, 1);
+        },
+
+        addTask() {
+            this.toDoList.push(this.newTask);
+            this.newTask = "";
         }
     }
 });

@@ -14,6 +14,10 @@
             <h1 class="text-center text-info my-3">Vue to do list</h1>
         </header>
         <main class="container">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask">
+                <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
+              </div>
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center" v-for="task in toDoList">{{task}}
                     <button type="button" class="btn-close" v-on:click="removeItem"></button>
