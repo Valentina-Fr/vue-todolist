@@ -13,18 +13,24 @@
         <header>
             <h1 class="text-center text-info my-3">Vue to do list</h1>
         </header>
+        
         <main class="container">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask">
                 <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
-              </div>
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center" v-for="task in toDoList">{{task}}
+            </div>
+            <div class="alert alert-secondary" role="alert" v-if="!toDoList.length">
+                Non ci sono più compiti in lista!
+            </div>            
+            <ul class="list-group" v-else>
+                <li class="list-group-item d-flex justify-content-between align-items-center" v-for="task in toDoList">
+                    {{task}}
                     <button type="button" class="btn-close" v-on:click="removeItem"></button>
                 </li>
-              </ul>
+            </ul>
         </main>
     </div>
+
     <script src="./js/script.js"></script>
 </body>
 </html>
