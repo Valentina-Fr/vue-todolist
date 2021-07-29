@@ -13,7 +13,9 @@ const app = new Vue ({
         },
 
         addTask() {
-            this.toDoList.push(this.newTask);
+            if(this.newTask.trim()) {
+                this.toDoList.push(this.newTask);
+            }
             this.newTask = "";
         }
     }
