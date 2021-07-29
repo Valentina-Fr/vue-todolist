@@ -7,6 +7,8 @@ const app = new Vue ({
         toDoList: ["Fare la spesa", "Fare il bucato", "Pagare bollette", "Pulire casa"],
     }, 
     methods: {
-
+        removeItem(index) {
+            this.toDoList.splice(index, 1);
+        }
     }
 });
