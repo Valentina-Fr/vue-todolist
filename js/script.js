@@ -10,6 +10,7 @@ const app = new Vue ({
             {text: "PAGARE BOLLETTE", done: false}, 
             {text: "PULIRE CASA", done: false}],
         newTask: "",
+        isInputVisible: false,
     }, 
     methods: {
         removeItem(index) {
@@ -34,6 +35,11 @@ const app = new Vue ({
 
         isDone(index) {
             return this.toDoList[index].done;
+        },
+
+        toggleInput() {
+            this.isInputVisible = !this.isInputVisible;
+            this.newTask = "";
         }
     }
 });

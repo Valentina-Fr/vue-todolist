@@ -16,13 +16,15 @@
         </header>
 
         <main class="container">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask" v-on:keyup.enter="addTask">
-                <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
+            <div v-if="!toDoList.length">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask" v-on:keyup.enter="addTask">
+                    <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
+                </div>
+                <div class="alert alert-secondary" role="alert">
+                    Non ci sono più compiti in lista!
+                </div>            
             </div>
-            <div class="alert alert-secondary" role="alert" v-if="!toDoList.length">
-                Non ci sono più compiti in lista!
-            </div>            
             <ul class="list-group" v-else>
                 <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(task, index) in toDoList">
                     <div v-on:click="toggleDone(index)">
@@ -30,6 +32,16 @@
                         <span v-bind:class="isDone(index) ? 'text-decoration-line-through': ''">{{task.text}}</span>
                     </div>
                     <button type="button" class="btn-close" v-on:click="removeItem(index)"></button>
+                </li>
+                <li class="list-group-item">
+                    <div class="input-group mb-3" v-if="isInputVisible">
+                        <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask" v-on:keyup.enter="addTask">
+                        <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
+                        <button class="btn btn-outline-info" type="button" v-on:click="toggleInput"><i class="fas fa-undo mx-2"></i></button>
+                    </div>
+                    <button class="btn btn-info w-100" v-else v-on:click="toggleInput">
+                        <i class="fa fa-plus me-2"></i>Aggiungi
+                    </button>
                 </li>
             </ul>
         </main>
