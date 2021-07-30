@@ -1,10 +1,14 @@
-console.log("test vue". Vue);
+console.log("test vue", Vue);
 Vue.config.devtools = true;
 
 const app = new Vue ({
     el: "#app",
     data: {
-        toDoList: ["Fare la spesa", "Fare il bucato", "Pagare bollette", "Pulire casa"],
+        toDoList: [
+            {text: "FARE LA SPESA", done: false}, 
+            {text: "FARE IL BUCATO", done: false}, 
+            {text: "PAGARE BOLLETTE", done: false}, 
+            {text: "PULIRE CASA", done: false}],
         newTask: "",
     }, 
     methods: {
@@ -14,9 +18,22 @@ const app = new Vue ({
 
         addTask() {
             if(this.newTask.trim()) {
-                this.toDoList.push(this.newTask);
+                this.toDoList.push({text: this.newTask.toUpperCase(), done: false});
             }
             this.newTask = "";
+        },
+
+        toggleDone(index) {
+            this.toDoList = this.toDoList.map((task, taskIndex) => {
+                if(taskIndex === index) {
+                    task.done = !task.done;
+                }
+                return task;
+            })
+        },
+
+        isDone(index) {
+            return this.toDoList[index].done;
         }
     }
 });
