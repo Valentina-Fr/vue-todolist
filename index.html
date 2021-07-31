@@ -11,35 +11,88 @@
 </head>
 <body>
     <div id="app">
+        <!-- Titolo -->
         <header>
             <h1 class="text-center text-info my-3">Vue to do list</h1>
         </header>
-
+        <!-- Main -->
         <main class="container">
-            <div v-if="!toDoList.length">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask" v-on:keyup.enter="addTask">
-                    <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
-                </div>
-                <div class="alert alert-secondary" role="alert">
-                    Non ci sono più compiti in lista!
-                </div>            
+            <!-- Barra di ricerca / Aggiungi nuovo task -->
+            <div class="input-group mb-3" v-if="toDoList.length">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Cerca" 
+                    v-model="searchTerm"
+                >
+                <span class="input-group-text">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
+            <div class="input-group mb-3" v-else>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Scrivi qui" 
+                    v-model="newTask" 
+                    v-on:keyup.enter="addTask"
+                >
+                <button 
+                    class="btn btn-outline-info" 
+                    v-on:click="addTask">
+                    Inserisci
+                </button>
+            </div>
+            <!-- Alert fine lista -->
+            <div class="alert alert-secondary" role="alert" v-if="!toDoList.length">
+                Non ci sono più compiti in lista!
+            </div>       
+            <!-- Lista -->     
             <ul class="list-group" v-else>
-                <li class="list-group-item d-flex justify-content-between align-items-center" v-for="(task, index) in toDoList">
+                <li 
+                    class="list-group-item d-flex justify-content-between align-items-center" 
+                    v-for="(task, index) in toDoList" 
+                    v-if="showItem(task)">
                     <div v-on:click="toggleDone(index)">
-                        <i class="me-2 far" v-bind:class="isDone(index) ? 'fa-check-square' : 'fa-square'"></i> 
-                        <span v-bind:class="isDone(index) ? 'text-decoration-line-through': ''">{{task.text}}</span>
+                        <i 
+                            class="me-2 far" 
+                            v-bind:class="isDone(index) ? 'fa-check-square' : 'fa-square'">
+                        </i> 
+                        <span 
+                            v-bind:class="isDone(index) ? 'text-decoration-line-through' : ''">
+                            {{task.text}}
+                        </span>
                     </div>
-                    <button type="button" class="btn-close" v-on:click="removeItem(index)"></button>
+                    <button 
+                        class="btn-close" 
+                        v-on:click="removeItem(index)">
+                    </button>
                 </li>
+                <!-- Aggiungi nuovo task -->
                 <li class="list-group-item">
                     <div class="input-group mb-3" v-if="isInputVisible">
-                        <input type="text" class="form-control" placeholder="Scrivi qui" v-model="newTask" v-on:keyup.enter="addTask">
-                        <button class="btn btn-outline-info" type="button" v-on:click="addTask">Inserisci</button>
-                        <button class="btn btn-outline-info" type="button" v-on:click="toggleInput"><i class="fas fa-undo mx-2"></i></button>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Scrivi qui" 
+                            v-model="newTask" 
+                            v-on:keyup.enter="addTask"
+                        >
+                        <button 
+                            class="btn btn-outline-info"
+                            v-on:click="addTask">
+                            Inserisci
+                        </button>
+                        <button 
+                            class="btn btn-outline-info"  
+                            v-on:click="toggleInput">
+                            <i class="fas fa-undo mx-2"></i>
+                        </button>
                     </div>
-                    <button class="btn btn-info w-100" v-else v-on:click="toggleInput">
+                    <button 
+                        class="btn btn-info w-100" 
+                        v-else 
+                        v-on:click="toggleInput">
                         <i class="fa fa-plus me-2"></i>Aggiungi
                     </button>
                 </li>

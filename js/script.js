@@ -11,15 +11,21 @@ const app = new Vue ({
             {text: "PULIRE CASA", done: false}],
         newTask: "",
         isInputVisible: false,
+        searchTerm: "",
     }, 
     methods: {
         removeItem(index) {
             this.toDoList.splice(index, 1);
+            this.searchTerm = "";
         },
 
         addTask() {
             if(this.newTask.trim()) {
                 this.toDoList.push({text: this.newTask.toUpperCase(), done: false});
+                this.toDoList.sort((a,b) => {
+                    return a.text.localeCompare(b.text);
+                });
+                this.toggleInput();
             }
             this.newTask = "";
         },
@@ -28,9 +34,10 @@ const app = new Vue ({
             this.toDoList = this.toDoList.map((task, taskIndex) => {
                 if(taskIndex === index) {
                     task.done = !task.done;
+                    this.searchTerm = "";
                 }
                 return task;
-            })
+            });
         },
 
         isDone(index) {
@@ -40,6 +47,13 @@ const app = new Vue ({
         toggleInput() {
             this.isInputVisible = !this.isInputVisible;
             this.newTask = "";
+        },
+
+        showItem(task) {
+            if(!this.searchTerm.trim()) return true;
+            const filter = this.searchTerm.trim().toUpperCase();
+            task.text = task.text.toUpperCase();
+            return task.text.includes(filter);
         }
     }
 });
